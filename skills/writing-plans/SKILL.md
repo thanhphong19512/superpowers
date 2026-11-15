@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: Use when you have an approved design for large work — many dependent steps or changes across services/modules — before touching code. Not for small or medium changes, which are implemented directly.
 ---
 
 # Writing Plans
@@ -8,6 +8,11 @@ description: Use when you have a spec or requirements for a multi-step task, bef
 ## Overview
 
 Write implementation plans for an engineer who has not seen this codebase or this spec. Assume they write idiomatic code in the project's language once they know the exact interface and the exact behavior, and that they will make a reasonable choice wherever the plan leaves one open. What they cannot know is what you decided: which files, which names and signatures, which values from the spec, how each feature behavior is verified, and which behaviors are locked. Document those. Give them the whole plan as feature-sized tasks. DRY. YAGNI. Spec-driven (superpowers:spec-driven-development), no TDD. Frequent commits.
+
+**Only for large work:** many dependent steps, or work that crosses
+services/modules with contracts between them, or when your human partner
+asks for a plan. Small and medium work is implemented directly with no
+plan file; if that is what you have, stop here and build it.
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 

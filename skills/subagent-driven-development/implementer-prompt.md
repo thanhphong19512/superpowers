@@ -76,6 +76,10 @@ Subagent (general-purpose):
       and note it as a concern in your report
     - In existing codebases, follow established patterns. Improve code you're touching
       the way a good developer would, but don't restructure things outside your task.
+    - Comment only what the code cannot show: the why behind a non-obvious
+      choice, and technical or business decisions you made while coding
+      (a rule, threshold, or trade-off and its reason). Never restate the
+      code or narrate the change ("added X", "fixed Y").
 
     ## When You're in Over Your Head
 

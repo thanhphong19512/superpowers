@@ -13,8 +13,11 @@ Dispatch a code reviewer subagent to catch issues before they cascade. The revie
 
 **Mandatory:**
 - After each task in subagent-driven development
-- After completing major feature
-- Before merge to main
+- After completing a large (multi-step or cross-service) feature
+- Before merge to main, for large work
+
+Small and medium changes get no reviewer subagent unless your human
+partner asks; read your own diff and verify by running it.
 
 **Optional but valuable:**
 - When stuck (fresh perspective)

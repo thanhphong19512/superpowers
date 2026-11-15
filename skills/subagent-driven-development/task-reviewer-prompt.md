@@ -119,6 +119,9 @@ Subagent (general-purpose):
     - Clean separation of concerns?
     - Proper error handling?
     - DRY without premature abstraction?
+    - Comments only where code cannot speak (the why, technical/business
+      decisions)? Comments restating code or narrating the change are Minor;
+      an undocumented non-obvious business rule is Important.
     - Edge cases handled?
 
     **Spec and guards:**
