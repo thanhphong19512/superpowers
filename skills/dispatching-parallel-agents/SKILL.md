@@ -81,7 +81,7 @@ Multiple dispatch calls in one response = parallel execution. One per response =
 When agents return:
 - Read each summary
 - Verify fixes don't conflict
-- Run full test suite
+- Run the in-scope tests: every test file the agents touched or fixed, together (full suite only if your human partner asks)
 - Integrate all changes
 
 ## Agent Prompt Structure
@@ -108,6 +108,8 @@ These are timing/race condition issues. Your task:
    - Adjusting test expectations if testing changed behavior
 
 Do NOT just increase timeouts - find the real issue.
+
+Run only this test file to verify, never the full suite.
 
 Return: Summary of what you found and what you fixed.
 ```
@@ -156,12 +158,12 @@ Agent 3 → Fix tool-approval-race-conditions.test.ts
 - Agent 2: Fixed event structure bug (threadId in wrong place)
 - Agent 3: Added wait for async tool execution to complete
 
-**Integration:** All fixes independent, no conflicts, full suite green
+**Integration:** All fixes independent, no conflicts, the three test files green together
 
 ## Verification
 
 After agents return:
 1. **Review each summary** - Understand what changed
 2. **Check for conflicts** - Did agents edit same code?
-3. **Run full suite** - Verify all fixes work together
+3. **Run the in-scope tests together** - Every touched test file in one run, to verify the fixes work together (full suite only on request)
 4. **Spot check** - Agents can make systematic errors

@@ -67,6 +67,21 @@ across edits. There is no test-driven development: verify behavior by
 running it, and write tests only for recurring issues and `[locked]`
 (sensitive) behaviors. See superpowers:spec-driven-development.
 
+## Test Scope
+
+Run only the tests in scope of the change: the test file(s), test name, or
+package that covers the code you touched, plus the guard tests of the
+feature you changed. Use the runner's filter (`pytest path::name`,
+`npm test -- path`, `go test ./pkg/...`, `cargo test name`,
+`dotnet test --filter`).
+
+**Never run the full test suite unless your human partner asks for it.**
+This holds everywhere — after a task, before a commit, before finishing a
+branch, in worktree setup, in a final review. If you think a full run is
+warranted (shared code with many callers, a dependency upgrade, a
+migration), say so and let them decide. A build or type check is not a
+test suite and may always be run.
+
 ## Code Comments
 
 Comment only what the code cannot say:
@@ -96,6 +111,7 @@ These thoughts mean STOP—you're rationalizing:
 | "I remember this skill" | Skills evolve. Read current version. |
 | "This doesn't count as a task" | Action = task. Check for skills. |
 | "The skill is overkill" | Check it; then size the work. Small work skips spec, plan, and subagents. |
+| "Let me run the full suite to be safe" | Run the in-scope tests. A full suite needs your human partner's request. |
 | "I'll write a plan just to be safe" | A plan for small work is waste. Plans are for multi-step, cross-service work. |
 | "I'll just do this one thing first" | Check BEFORE doing anything. |
 | "This feels productive" | Undisciplined action wastes time. Skills prevent this. |

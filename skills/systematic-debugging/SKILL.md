@@ -186,7 +186,7 @@ You MUST complete each phase before proceeding to the next.
 
 3. **Verify Fix**
    - Reproduction no longer fails?
-   - Feature's guard tests still pass?
+   - In-scope tests and the feature's guard tests still pass? (scoped run; no full suite unless asked)
    - Issue actually resolved?
    - Record it in the feature spec's Known issues (symptom, root cause,
      occurrences). Second occurrence → add the guard test, prove it fails

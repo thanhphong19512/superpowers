@@ -39,7 +39,9 @@ Subagent (general-purpose):
     4. Write guard tests ONLY where the task names them (`[locked]`
        behaviors, recurring issues); break the code on purpose to see
        each guard fail, then restore. No other tests. No test-first.
-    5. Run the feature's existing guard tests
+    5. Run the in-scope tests only: the feature's guard tests and existing
+       test files covering the code you touched, using the runner's
+       filter. Never run the full suite unless the brief says to.
     6. Commit code and spec together
     7. Self-review (see below)
     8. Report back
@@ -123,7 +125,8 @@ Subagent (general-purpose):
     - Does every test I added guard a locked behavior or recurring issue,
       and did I see it fail against broken code?
     - Did I avoid adding tests nobody asked for?
-    - Do all the feature's guards pass, with pristine output?
+    - Do the in-scope tests and guards pass, with pristine output, and did
+      I avoid running the full suite?
 
     If you find issues during self-review, fix them now before reporting.
 

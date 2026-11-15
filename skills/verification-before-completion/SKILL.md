@@ -39,7 +39,7 @@ Skip any step = lying, not verifying
 
 | Claim | Requires | Not Sufficient |
 |-------|----------|----------------|
-| Tests pass | Test command output: 0 failures | Previous run, "should pass" |
+| In-scope tests pass | Filtered test command output: 0 failures, and the claim names the scope | Previous run, "should pass", "all tests pass" without having run all |
 | Linter clean | Linter output: 0 errors | Partial check, extrapolation |
 | Build succeeds | Build command: exit 0 | Linter passing, logs look good |
 | Bug fixed | Test original symptom: passes | Code changed, assumed fixed |
@@ -54,7 +54,7 @@ Skip any step = lying, not verifying
 - Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)
 - About to commit/push/PR without verification
 - Trusting agent success reports
-- Relying on partial verification
+- Claiming more than you checked (e.g. "all tests pass" after an in-scope run)
 - Thinking "just this once"
 - Tired and wanting work over
 - **ANY wording implying success without having run verification**
@@ -69,15 +69,17 @@ Skip any step = lying, not verifying
 | "Linter passed" | Linter ≠ compiler |
 | "Agent said success" | Verify independently |
 | "I'm tired" | Exhaustion ≠ excuse |
-| "Partial check is enough" | Partial proves nothing |
+| "Partial check is enough" | The in-scope run is the right check; claim exactly that scope, nothing wider |
+| "I should run the full suite to be sure" | Full suite only when your human partner asks. Run the in-scope tests. |
 | "Different words so rule doesn't apply" | Spirit over letter |
 
 ## Key Patterns
 
 **Tests:**
 ```
-✅ [Run test command] [See: 34/34 pass] "All tests pass"
-❌ "Should pass now" / "Looks correct"
+✅ [Run pytest tests/billing/] [See: 34/34 pass] "billing tests pass (34/34)"
+❌ "Should pass now" / "Looks correct" / "All tests pass" after a scoped run
+❌ Running the full suite nobody asked for
 ```
 
 **Guard tests (locked behaviors, recurring issues only):**

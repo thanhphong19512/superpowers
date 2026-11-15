@@ -97,7 +97,7 @@ git worktree add "$path" -b "$BRANCH_NAME"
 cd "$path"
 ```
 
-**Sandbox fallback:** If `git worktree add` fails with a permission error (sandbox denial), tell the user the sandbox blocked worktree creation and you're working in the current directory instead. Then run setup and baseline tests in place.
+**Sandbox fallback:** If `git worktree add` fails with a permission error (sandbox denial), tell the user the sandbox blocked worktree creation and you're working in the current directory instead. Then run setup and the in-scope baseline in place.
 
 ## Step 2: Project Setup
 
@@ -120,12 +120,17 @@ if [ -f go.mod ]; then go mod download; fi
 
 ## Step 3: Verify Clean Baseline
 
-Run tests to ensure workspace starts clean:
+Run the build, then only the tests in scope of the planned work (the
+test files covering the code you are about to change, and the guards of
+the features involved), using the runner's filter:
 
 ```bash
-# Use project-appropriate command
-npm test / cargo test / pytest / go test ./...
+# Use project-appropriate command, filtered to the scope
+pytest tests/path/ / npm test -- path / go test ./pkg/... / cargo test name
 ```
+
+Never run the full suite here unless your human partner asks. If the
+scope is not known yet, the build alone is the baseline.
 
 **If tests fail:** Report failures, ask whether to proceed or investigate.
 
@@ -135,7 +140,7 @@ npm test / cargo test / pytest / go test ./...
 
 ```
 Worktree ready at <full-path>
-Tests passing (<N> tests, 0 failures)
+Build OK; in-scope tests passing (<N> tests, 0 failures)
 Ready to implement <feature-name>
 ```
 
@@ -164,4 +169,5 @@ Ready to implement <feature-name>
 | "`git worktree add` is quicker than hunting for a native tool" | A native tool (e.g. `EnterWorktree`) owns placement, branching, and cleanup. Bypassing it is the #1 mistake — it creates phantom state your harness can't see or manage. |
 | "The worktree directory is surely ignored already" | Run `git check-ignore`. An unignored worktree directory commits the whole tree into the repo. |
 | "Any directory name works" | Explicit instructions beat an existing project-local directory, which beats the `.worktrees/` default. |
-| "The workspace is fresh — baseline tests can wait" | A dirty baseline makes every later failure ambiguous. Run the tests now; proceeding past failures is your human partner's call. |
+| "The workspace is fresh — baseline tests can wait" | A dirty baseline makes every later failure ambiguous. Run the build and the in-scope tests now; proceeding past failures is your human partner's call. |
+| "A full-suite baseline is safest" | Full suite only on request. Build + in-scope tests is the baseline. |
