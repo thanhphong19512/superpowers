@@ -27,9 +27,37 @@ Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it h
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
 
-- "Let's build X" → superpowers:brainstorming first, then implementation skills.
+- "Let's build X" (large) → superpowers:brainstorming first, then implementation skills.
 - "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
 - Writing or changing feature code → superpowers:spec-driven-development.
+
+## Size the Work First
+
+Ceremony scales with the work. Decide the size before choosing a workflow,
+and say it in one line ("Small change, doing it directly").
+
+**Small or medium — do it yourself, directly.** One feature or bug, a
+handful of files, one service or module, the intent is clear from the
+request or one question. No design doc, no plan file, no subagents, no
+review dispatch. Ask at most the one question that changes what gets
+built, then implement, verify by running it, and report.
+
+**Large — spec, plan, subagents.** Use the full workflow
+(superpowers:brainstorming → design doc → superpowers:writing-plans →
+superpowers:subagent-driven-development or superpowers:executing-plans)
+only when at least one is true:
+- the work runs through many dependent steps that must land in order;
+- it crosses services, modules, or repos with contracts between them
+  (APIs, schemas, events, migrations);
+- several people or agents must work from the same written agreement;
+- your human partner asks for a spec, a plan, or subagents.
+
+Start subagents only for large work, for genuinely independent parallel
+investigations (superpowers:dispatching-parallel-agents), or when your
+human partner asks. Never spawn a subagent for work you can finish in
+this session.
+
+If small work grows into large mid-way, stop, say so, and step up.
 
 ## Development Model
 
@@ -38,6 +66,20 @@ living spec (`docs/features/<feature>.md`) that is the source of truth
 across edits. There is no test-driven development: verify behavior by
 running it, and write tests only for recurring issues and `[locked]`
 (sensitive) behaviors. See superpowers:spec-driven-development.
+
+## Code Comments
+
+Comment only what the code cannot say:
+- **why**, when it is not obvious: a workaround, a constraint from an
+  external system, a non-obvious invariant, an ordering that matters;
+- **technical or business decisions made while coding**: a rule, a
+  threshold, a trade-off you chose, and its reason (e.g.
+  `// Round half-up: finance reconciles against the bank's rounding`).
+
+Never comment what the code already shows: restating the line, naming
+the function's steps, narrating a change ("added X", "fixed Y"), or
+labeling sections. Prefer a clearer name over a comment. Match the
+existing comment density of the file.
 
 ## Red Flags
 
@@ -53,7 +95,8 @@ These thoughts mean STOP—you're rationalizing:
 | "This doesn't need a formal skill" | If a skill exists, use it. |
 | "I remember this skill" | Skills evolve. Read current version. |
 | "This doesn't count as a task" | Action = task. Check for skills. |
-| "The skill is overkill" | Simple things become complex. Use it. |
+| "The skill is overkill" | Check it; then size the work. Small work skips spec, plan, and subagents. |
+| "I'll write a plan just to be safe" | A plan for small work is waste. Plans are for multi-step, cross-service work. |
 | "I'll just do this one thing first" | Check BEFORE doing anything. |
 | "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
 | "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |

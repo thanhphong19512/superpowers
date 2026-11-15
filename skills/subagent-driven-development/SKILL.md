@@ -1,6 +1,6 @@
 ---
 name: subagent-driven-development
-description: Use when executing implementation plans with independent tasks in the current session
+description: Use when executing a written implementation plan for large, multi-step or cross-service work with independent tasks. Not for small or medium changes, which you implement directly without subagents.
 ---
 
 # Subagent-Driven Development
@@ -31,6 +31,8 @@ publish); and a plan so broken that every path forward is a guess. For those,
 stop and ask.
 
 ## When to Use
+
+Only with a written plan for large work; otherwise implement directly.
 
 ```dot
 digraph when_to_use {

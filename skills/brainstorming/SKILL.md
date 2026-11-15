@@ -21,9 +21,18 @@ why?
 
 - **Everything that matters is in the request** ("make the icon cornflower
   blue"). This is a quick, clear task. Do it, and say what you did.
-- **Something non-trivial is missing.** Start the conversation.
+- **Small or medium work** (one feature or fix, one service, intent
+  mostly clear): ask at most the one question whose answer changes what
+  gets built, state your approach in a line or two, and build it. No
+  design doc, no plan, no subagents. This skill ends there.
+- **Large work** (many dependent steps, or crosses services/modules with
+  contracts between them) **with something non-trivial missing.** Start
+  the conversation below.
 
-Before you start implementing, you must, in order:
+The rest of this skill — approaches, design doc, approval, plan — applies
+to large work only.
+
+For large work, before you start implementing, you must, in order:
 
 1. Lay out the approaches in a message of their own, and have your
    human partner pick one (see Lay out the approaches).
@@ -213,8 +222,8 @@ how big the work is in plain words. They can override it.
 
 | Size | The design doc |
 |------|----------------|
-| A small change | a short one: what you already covered together, written down |
-| A project | the full written design (below) |
+| Small or medium change | none: confirm the approach in chat and build it |
+| A project (multi-step or cross-service) | the full written design (below), then a plan |
 
 Short or full, the design doc has an **Approaches** part: the two or
 three ways you considered building it, what each trades off, which one
@@ -241,9 +250,8 @@ from without going back to your human partner. Cover:
   and which behaviors are sensitive enough to lock (see
   superpowers:spec-driven-development); these seed `docs/features/`
 
-For a small change, the short design covers the same points in a line
-or two each and goes straight to your human partner, without the
-builder check.
+Small and medium changes get no written design; they are agreed in chat
+and built directly.
 
 **Where it goes:** in a software repo,
 `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`, committed.
@@ -270,8 +278,9 @@ round of questions the check produces. Without a subagent tool, read the
 document as that builder yourself.
 
 <HARD-GATE>
-Nothing gets built until your human partner approves the design doc:
-the short one for a small change, the full one for a project.
+For a project (multi-step or cross-service), nothing gets built until
+your human partner approves the design doc. Small and medium changes
+have no design doc and no gate: confirm the approach in chat and build.
 Building includes writing product code, scaffolding, installing
 dependencies, creating projects, and invoking an implementation skill.
 Reading and exploring are fine.

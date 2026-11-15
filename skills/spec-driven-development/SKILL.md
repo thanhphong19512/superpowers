@@ -12,6 +12,15 @@ living spec that says what it does. Code is changed to match the spec;
 the spec is changed when your human partner changes their mind. Behavior
 is proven by running it, not by ceremony.
 
+**Scale to the work.** For a small or medium change (one feature, a few
+files, intent clear), the spec is a few lines in `docs/features/` updated
+alongside the code; there is no design doc, plan file, or subagent. A
+full design doc and plan are only for large, multi-step or cross-service
+work (see the sizing rules in superpowers:using-superpowers). If the
+project has no `docs/features/` and the change is small, update or create
+only the one feature file it touches, or skip it for a pure bug fix that
+changes no behavior.
+
 **Core principle:** The spec says what must stay true. Tests guard only
 what has broken before or must never break. Everything else is verified
 by running the feature and reading the result.
@@ -122,7 +131,10 @@ For each change to a feature:
    behaviors this change touches (and nothing more).
 2. **Update the spec** for what changes. Note which `[locked]` behaviors
    the change touches.
-3. **Implement** the change.
+3. **Implement** the change. Comment only what the code cannot show: the
+   why behind a non-obvious choice, and technical or business decisions
+   made while coding (a rule, threshold, or trade-off and its reason).
+   No comments that restate the code or narrate the change.
 4. **Verify by running it.** Use the cheapest evidence that proves each
    changed behavior: run the feature, call the endpoint, run the CLI, open
    the page, run the build and type checker. Read the output.
@@ -158,5 +170,7 @@ stop and ask before implementing.
 | "The guard is failing, I'll update the expected value" | A failing guard is the point. Fix the code unless the spec changed. |
 | "I'll update the spec later" | The spec is the memory across edits. Spec and code go in the same commit. |
 | "This feels sensitive, I'll lock it quietly" | Propose locks out loud; your human partner decides. |
+| "Small change, but I'll write a plan and dispatch subagents" | Small and medium work is done directly. Plans are for multi-step, cross-service work. |
+| "I'll add a comment explaining what this does" | If the code shows it, delete the comment. Comment the why and the decisions. |
 | "It compiles, so it works" | Run the behavior you changed and read the result. |
 | "The guard passes, it must be fine" | Did you see it fail when broken? If not, it guards nothing. |
