@@ -1,6 +1,6 @@
 ---
 name: finishing-a-development-branch
-description: Use when implementation is complete, all tests pass, and you need to decide how to integrate the work
+description: Use when implementation is complete, the in-scope tests pass, and you need to decide how to integrate the work
 ---
 
 # Finishing a Development Branch
@@ -13,9 +13,9 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 ## Step 1: Verify Tests
 
-Run the project's build and its existing test suite (`npm test` / `cargo test` / `pytest` / `go test ./...`), which includes every feature's guard tests. A project with no tests runs its build and a smoke run of the features this branch changed.
+Run the build and the **in-scope tests only**: the test files covering the code this branch changed and the guard tests of the features it touched (use the runner's filter: `pytest path::name`, `npm test -- path`, `go test ./changed/pkg/...`). Do not run the full suite unless your human partner asks for it; if you think it is warranted, say so in the menu. A project with no tests runs its build and a smoke run of the features this branch changed.
 
-**If tests fail**, report the failures and stop — the menu comes after a green suite:
+**If tests fail**, report the failures and stop — the menu comes after a green in-scope run:
 
 ```
 Tests failing (<N> failures). Must fix before completing:
@@ -95,8 +95,8 @@ git checkout <base-branch>
 git pull
 git merge <feature-branch>
 
-# Verify tests on merged result
-<test command>
+# Verify the in-scope tests on the merged result
+<in-scope test command>
 ```
 
 If tests fail on the merged result: stop, leave the worktree and branch in
@@ -213,7 +213,8 @@ place. If your platform provides a workspace-exit tool, use it.
 
 | Excuse | Reality |
 |--------|---------|
-| "Tests passed earlier this session" | Run the suite on the tree you are about to integrate. A green run only proves the tree it ran on. |
+| "Tests passed earlier this session" | Run the in-scope tests on the tree you are about to integrate. A green run only proves the tree it ran on. |
+| "Before merging I should run everything" | Full suite only on request. Run the in-scope tests; offer the full run in the menu if it seems warranted. |
 | "They obviously want it merged" | Integration is your human partner's decision. Present the menu and wait. |
 | "They seem done with this feature — I'll offer to discard it" | The menu is complete as written. Discard happens only when your human partner asks for it in so many words. |
 | "'Yeah, get rid of it' counts as confirmation" | Only the typed word `discard` authorizes deletion. |

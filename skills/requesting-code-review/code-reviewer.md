@@ -82,9 +82,9 @@ Subagent (general-purpose):
 
     **Testing:**
     - Tests verify real behavior, not mocks?
-    - Edge cases covered?
-    - Integration tests where they matter?
-    - All tests passing?
+    - Tests exist only for locked behaviors and recurring issues?
+    - In-scope tests passing per the reported evidence? (Do not run the
+      full suite; recommend it in your report if you think it is needed.)
 
     **Production readiness:**
     - Migration strategy if schema changed?

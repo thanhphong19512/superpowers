@@ -169,6 +169,10 @@ Everything you print, and every tool result, stays resident in your
 context for the rest of the session. Redirect long test output to a file
 in the workspace and read its tail; read a brief, not the whole plan.
 
+Every test command is scoped: the test files and guards the task touches,
+via the runner's filter. Never run the full suite — not per task, not in
+the fix pass, not at the end — unless your human partner asked for it.
+
 ### 1. Take the task
 
 - Run this skill's `scripts/task-start PLAN_FILE N` by its absolute path,
@@ -285,7 +289,7 @@ because the spec was silent has graded the spec, not the effect. Then:
 Fix the Critical and Important findings yourself — you are the
 implementer here — in ONE pass. Each fix is verified by evidence, not by
 a second reviewer: reproduce the finding by running it, fix it, run it
-again and read the output, then run every guard test. A finding that
+again and read the output, then run the guard tests of the affected features (scoped, never the full suite). A finding that
 touches a `[locked]` behavior or repeats a Known issue also gets a guard
 test, shown to fail against the unfixed code. Record each in the ledger
 as `Final: fixed <finding> — <how verified>, guards <N>/<N>`. Record the

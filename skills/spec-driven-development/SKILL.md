@@ -138,7 +138,9 @@ For each change to a feature:
 4. **Verify by running it.** Use the cheapest evidence that proves each
    changed behavior: run the feature, call the endpoint, run the CLI, open
    the page, run the build and type checker. Read the output.
-5. **Run every guard** of the feature (its `guard:` tests), whether or not
+5. **Run the in-scope tests:** the feature's guards (its `guard:` tests,
+   by name or file) and any existing test file covering the code you
+   touched. Never the full suite unless your human partner asks. Run every guard, whether or not
    you think the change touched them. A guard that fails means the change
    broke a locked behavior or brought back a known issue. Stop and fix the
    code, never the guard, unless the spec itself changed that behavior,
