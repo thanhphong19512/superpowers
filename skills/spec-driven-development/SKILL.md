@@ -1,6 +1,6 @@
 ---
 name: spec-driven-development
-description: Use when implementing, changing, or fixing a feature, before writing implementation code - keeps a living feature spec as the source of truth, verifies behavior by running it, and writes tests only for recurring issues and locked (sensitive) behaviors
+description: Use when changing what a feature does (its observable behavior), or when a project keeps feature specs in docs/features/ - keeps the spec true, verifies by running it, and writes tests only for recurring issues and locked (sensitive) behaviors. Not needed for refactors, typo fixes, styling, or edits that change no behavior.
 ---
 
 # Spec-Driven Development
@@ -12,14 +12,19 @@ living spec that says what it does. Code is changed to match the spec;
 the spec is changed when your human partner changes their mind. Behavior
 is proven by running it, not by ceremony.
 
-**Scale to the work.** For a small or medium change (one feature, a few
-files, intent clear), the spec is a few lines in `docs/features/` updated
-alongside the code; there is no design doc, plan file, or subagent. A
-full design doc and plan are only for large, multi-step or cross-service
-work (see the sizing rules in superpowers:using-superpowers). If the
-project has no `docs/features/` and the change is small, update or create
-only the one feature file it touches, or skip it for a pure bug fix that
-changes no behavior.
+**Scale to the work.**
+- **No behavior change** (refactor, rename, typo, styling, internal
+  cleanup, a bug fix that restores the spec'd behavior): touch no spec.
+  Just make the change and verify it.
+- **Small or medium behavior change:** update the one or two spec lines
+  that changed, if the feature has a spec. If it has none and the project
+  has no `docs/features/`, do not create one unless the behavior is
+  sensitive enough to lock or your human partner asks.
+- **Large, multi-step or cross-service work:** full specs, design doc,
+  and plan (see the sizing rules in superpowers:using-superpowers).
+
+**Never commit unless your human partner asks**, or a large-work plan's
+steps say to. Leave changes in the working tree and say what changed.
 
 **Core principle:** The spec says what must stay true. Tests guard only
 what has broken before or must never break. Everything else is verified
@@ -80,9 +85,11 @@ Tests exist for exactly two reasons. If neither applies, do not write one.
 - it is a regression of something that worked before and broke because of
   an unrelated change.
 
-The first time a bug is fixed, record it under Known issues with
-`occurrences: 1` and no test. The second time, write the guard test,
-bump `occurrences`, and add `guard:`.
+When a bug worth remembering is fixed (non-obvious root cause, user-visible,
+or likely to return) and the feature has a spec, record it under Known
+issues with `occurrences: 1` and no test. The second time, write the
+guard test, bump `occurrences`, and add `guard:`. Typos and one-off slips
+are not recorded.
 
 **2. A locked behavior.** A behavior is locked when getting it wrong is
 expensive and it must survive many later edits exactly:
@@ -125,12 +132,12 @@ keeping, read `references/writing-good-tests.md`.
 
 ## The Loop
 
-For each change to a feature:
+For each change to a feature's behavior:
 
-1. **Read the spec.** If the feature has none, create it with the
-   behaviors this change touches (and nothing more).
-2. **Update the spec** for what changes. Note which `[locked]` behaviors
-   the change touches.
+1. **Read the spec**, if the feature has one. Create one only per the
+   scaling rules above.
+2. **Update the spec** lines for what changes. Note which `[locked]`
+   behaviors the change touches.
 3. **Implement** the change. Comment only what the code cannot show: the
    why behind a non-obvious choice, and technical or business decisions
    made while coding (a rule, threshold, or trade-off and its reason).
@@ -146,10 +153,8 @@ For each change to a feature:
    code, never the guard, unless the spec itself changed that behavior,
    with your human partner's approval.
 6. **Add guards** only for the reasons above.
-7. **Commit** code and spec together.
-
-Superpowers:verification-before-completion governs any claim that the
-work is done: the claim names the spec IDs it verified and how.
+7. **Report** briefly what changed and how you verified it. Commit only if
+   asked (code and spec together).
 
 ## Changing a Locked Behavior
 
@@ -168,9 +173,11 @@ stop and ask before implementing.
 |---------|---------|
 | "Let me write the failing test first" | Not this workflow. Build it, run it, read the output. |
 | "More tests can't hurt" | Every test is maintenance. Only recurring issues and locked behaviors earn one. |
-| "This bug is trivial, no need to record it" | Recording it is how you know it recurred. One line in Known issues. |
+| "A non-obvious bug, not worth recording" | If it could come back, one line in Known issues is how you'll know it recurred. |
+| "Small refactor, let me update the spec" | No behavior change, no spec change. |
+| "I'll commit this now" | Only when asked. |
 | "The guard is failing, I'll update the expected value" | A failing guard is the point. Fix the code unless the spec changed. |
-| "I'll update the spec later" | The spec is the memory across edits. Spec and code go in the same commit. |
+| "I'll update the spec later" | When behavior changes, the spec line changes with the code. |
 | "This feels sensitive, I'll lock it quietly" | Propose locks out loud; your human partner decides. |
 | "Small change, but I'll write a plan and dispatch subagents" | Small and medium work is done directly. Plans are for multi-step, cross-service work. |
 | "I'll add a comment explaining what this does" | If the code shows it, delete the comment. Comment the why and the decisions. |

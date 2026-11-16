@@ -1,46 +1,47 @@
 ---
 name: using-superpowers
-description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions
+description: Use when starting any conversation - establishes how to size work and when to use skills; small and medium changes are done directly without process
 ---
 
 <SUBAGENT-STOP>
 If you were dispatched as a subagent to execute a specific task, ignore this skill.
 </SUBAGENT-STOP>
 
-<EXTREMELY-IMPORTANT>
-If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
-
-IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
-
-This is not negotiable. You cannot rationalize your way out of this.
-</EXTREMELY-IMPORTANT>
-
 ## The Rule
 
-**Invoke relevant or requested skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If it turns out wrong for the situation, you don't have to use it.
+**Size the work first, then pick skills.** Reading files, git history, or
+the code you are about to change is always allowed before deciding — you
+cannot size work you have not looked at.
 
-**Before entering plan mode:** if you haven't already brainstormed, invoke the brainstorming skill first.
+- **Small or medium work:** just do it. Skills are optional references
+  here; use one only when it clearly fits (a stubborn bug →
+  superpowers:systematic-debugging). No announcements, no todo lists, no
+  ceremony.
+- **Large work, or your human partner names a skill or workflow:** invoke
+  the matching skills and follow them.
 
-Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
+Invoke a skill when it clearly matches the task, not "just in case."
 
-## Skill Priority
+## Skill Map
 
-When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
-
-- "Let's build X" (large) → superpowers:brainstorming first, then implementation skills.
-- "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
-- Writing or changing feature code → superpowers:spec-driven-development.
+- Large new feature or project, or a request too vague to build →
+  superpowers:brainstorming, then superpowers:writing-plans.
+- A bug that is not obvious, or a fix that already failed once →
+  superpowers:systematic-debugging.
+- Changing feature behavior → superpowers:spec-driven-development's rules
+  (spec, guards, tests) apply; for small changes, that means updating a
+  spec line only if behavior changed.
 
 ## Size the Work First
 
-Ceremony scales with the work. Decide the size before choosing a workflow,
-and say it in one line ("Small change, doing it directly").
+Ceremony scales with the work.
 
 **Small or medium — do it yourself, directly.** One feature or bug, a
 handful of files, one service or module, the intent is clear from the
 request or one question. No design doc, no plan file, no subagents, no
-review dispatch. Ask at most the one question that changes what gets
-built, then implement, verify by running it, and report.
+review dispatch, no worktree, no integration menu, no commit unless
+asked. Ask at most the one question that changes what gets built, then
+implement, verify proportionately, and report briefly.
 
 **Large — spec, plan, subagents.** Use the full workflow
 (superpowers:brainstorming → design doc → superpowers:writing-plans →
@@ -98,24 +99,15 @@ existing comment density of the file.
 
 ## Red Flags
 
-These thoughts mean STOP—you're rationalizing:
-
 | Thought | Reality |
 |---------|---------|
-| "This is just a simple question" | Questions are tasks. Check for skills. |
-| "I need more context first" | Skill check comes BEFORE clarifying questions. |
-| "Let me explore the codebase first" | Skills tell you HOW to explore. Check first. |
-| "I can check git/files quickly" | Files lack conversation context. Check for skills. |
-| "Let me gather information first" | Skills tell you HOW to gather information. |
-| "This doesn't need a formal skill" | If a skill exists, use it. |
-| "I remember this skill" | Skills evolve. Read current version. |
-| "This doesn't count as a task" | Action = task. Check for skills. |
-| "The skill is overkill" | Check it; then size the work. Small work skips spec, plan, and subagents. |
+| "Let me load a skill just in case" | Only when it clearly fits. Small work needs none. |
+| "I'll announce the skill and make a todo list" | Not for small or medium work. Just do it. |
 | "Let me run the full suite to be safe" | Run the in-scope tests. A full suite needs your human partner's request. |
 | "I'll write a plan just to be safe" | A plan for small work is waste. Plans are for multi-step, cross-service work. |
-| "I'll just do this one thing first" | Check BEFORE doing anything. |
-| "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
-| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
+| "I'll commit this for them" | Commit only when asked, or when a large-work plan's steps say so. |
+| "This is large, but I'll wing it" | Large or cross-service work gets the spec, plan, and subagent workflow. |
+| "I remember this skill" | Skills evolve. When you use one, read the current version. |
 
 ## Platform Adaptation
 

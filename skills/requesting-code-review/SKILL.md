@@ -1,13 +1,13 @@
 ---
 name: requesting-code-review
-description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements
+description: Use after each task of a large-work plan, before merging large or risky work, or when your human partner asks for a review. Not for small or medium changes.
 ---
 
 # Requesting Code Review
 
 Dispatch a code reviewer subagent to catch issues before they cascade. The reviewer gets precisely crafted context for evaluation — never your session's history.
 
-**Core principle:** Review early, review often.
+**Core principle:** Review where a second pair of eyes pays for itself: large work, risky changes, and before merging large work. Small and medium changes get your own read of the diff, not a reviewer subagent.
 
 ## When to Request Review
 
@@ -19,10 +19,9 @@ Dispatch a code reviewer subagent to catch issues before they cascade. The revie
 Small and medium changes get no reviewer subagent unless your human
 partner asks; read your own diff and verify by running it.
 
-**Optional but valuable:**
-- When stuck (fresh perspective)
-- Before refactoring (baseline check)
-- After fixing complex bug
+**Optional (offer it, don't just do it):**
+- When stuck on a hard problem (fresh perspective)
+- After a risky fix to money, auth, or data integrity
 
 ## How to Request
 
