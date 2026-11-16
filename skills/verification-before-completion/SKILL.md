@@ -1,38 +1,41 @@
 ---
 name: verification-before-completion
-description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
+description: Use when about to claim code works, is fixed, or passes, before committing or creating PRs - evidence proportional to the change, and never claiming more than was checked
 ---
 
 # Verification Before Completion
 
 ## Overview
 
-**Core principle:** Evidence before claims, always.
+**Core principle:** Don't claim what you didn't check. Check in proportion
+to the change.
 
-**Violating the letter of this rule is violating the spirit of this rule.**
-
-## The Iron Law
+## The Rule
 
 ```
-NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
+NO "IT WORKS / IT'S FIXED / TESTS PASS" WITHOUT EVIDENCE FROM THIS SESSION
 ```
 
-If you haven't run the verification command in this message, you cannot claim it passes.
+Scale the check to the change:
+
+| Change | Enough evidence |
+|--------|-----------------|
+| Docs, comments, copy, config values, renames the compiler checks | Re-read the diff. No command needed. |
+| Small code change | The build/type check, or one run of the changed behavior. |
+| Behavior change or bug fix | Run the changed behavior (or the reproduction) and read the output; in-scope tests. |
+| Locked behavior, recurring issue, large work | Guards + in-scope tests, and the evidence named in the report. |
+
+When you could not verify something, say so plainly instead of implying
+it works. Keep the report short: what changed, what you ran, the result.
 
 ## The Gate Function
 
 ```
-BEFORE claiming any status or expressing satisfaction:
+BEFORE claiming code works, is fixed, or passes:
 
-1. IDENTIFY: What command proves this claim?
-2. RUN: Execute the FULL command (fresh, complete)
-3. READ: Full output, check exit code, count failures
-4. VERIFY: Does output confirm the claim?
-   - If NO: State actual status with evidence
-   - If YES: State claim WITH evidence
-5. ONLY THEN: Make the claim
-
-Skip any step = lying, not verifying
+1. IDENTIFY: What is the cheapest check that proves this claim?
+2. RUN it fresh, and READ the output and exit code
+3. CLAIM exactly what it showed — no wider
 ```
 
 ## Common Failures
@@ -50,14 +53,11 @@ Skip any step = lying, not verifying
 
 ## Red Flags - STOP
 
-- Using "should", "probably", "seems to"
-- Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)
-- About to commit/push/PR without verification
-- Trusting agent success reports
+- Saying code "should work" / "probably works" instead of checking
+- About to commit/push/PR without the check the change needs
+- Trusting agent success reports without looking at the diff
 - Claiming more than you checked (e.g. "all tests pass" after an in-scope run)
-- Thinking "just this once"
-- Tired and wanting work over
-- **ANY wording implying success without having run verification**
+- Running heavy checks for a doc-only or trivial change
 
 ## Rationalization Prevention
 
@@ -65,13 +65,11 @@ Skip any step = lying, not verifying
 |--------|---------|
 | "Should work now" | RUN the verification |
 | "I'm confident" | Confidence ≠ evidence |
-| "Just this once" | No exceptions |
 | "Linter passed" | Linter ≠ compiler |
 | "Agent said success" | Verify independently |
-| "I'm tired" | Exhaustion ≠ excuse |
 | "Partial check is enough" | The in-scope run is the right check; claim exactly that scope, nothing wider |
 | "I should run the full suite to be sure" | Full suite only when your human partner asks. Run the in-scope tests. |
-| "Different words so rule doesn't apply" | Spirit over letter |
+| "Let me run everything to be thorough" | Proportional evidence. Over-checking a small change wastes the user's time. |
 
 ## Key Patterns
 
@@ -114,16 +112,7 @@ Skip any step = lying, not verifying
 
 ## When To Apply
 
-**ALWAYS before:**
-- ANY variation of success/completion claims
-- ANY expression of satisfaction
-- ANY positive statement about work state
-- Committing, PR creation, task completion
-- Moving to next task
-- Delegating to agents
-
-**Rule applies to:**
-- Exact phrases
-- Paraphrases and synonyms
-- Implications of success
-- ANY communication suggesting completion/correctness
+Before claiming code works, is fixed, or passes; before committing,
+opening a PR, or marking a task complete; and when accepting a
+subagent's "done". Not for conversation, explanations, or doc-only edits
+beyond re-reading the diff.

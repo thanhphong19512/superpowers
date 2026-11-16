@@ -1,6 +1,6 @@
 ---
 name: systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
+description: Use when a bug, test failure, or unexpected behavior has no obvious cause, when a first fix attempt failed, or when asked to debug systematically - not for errors whose message points straight at the cause
 ---
 
 # Systematic Debugging
@@ -17,29 +17,27 @@ description: Use when encountering any bug, test failure, or unexpected behavior
 NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
 ```
 
-If you haven't completed Phase 1, you cannot propose fixes.
+If you haven't completed Phase 1, you cannot propose fixes. (Obvious
+errors take the fast path below; the law applies once the cause is not
+obvious.)
 
-## When to Use
+## Fast Path: Obvious Errors
 
-Use for ANY technical issue:
-- Test failures
-- Bugs in production
-- Unexpected behavior
-- Performance problems
-- Build failures
-- Integration issues
+When the error message or stack trace points directly at the cause — a
+typo, a missing import, a wrong type, a null at a line you can read, a
+compile error, a config key spelled wrong — fix it, re-run the failing
+command, and move on. No phases.
 
-**Use this ESPECIALLY when:**
-- Under time pressure (emergencies make guessing tempting)
-- "Just one quick fix" seems obvious
-- You've already tried multiple fixes
-- Previous fix didn't work
-- You don't fully understand the issue
+Leave the fast path the moment the cause is not where the error says,
+or your first fix does not work. Then use the full process below.
 
-**Don't skip when:**
-- Issue seems simple (simple bugs have root causes too)
-- You're in a hurry (rushing guarantees rework)
-- Manager wants it fixed NOW (systematic is faster than thrashing)
+## When to Use the Full Process
+
+- The cause is not obvious from the error, or there is no error at all
+- A first fix attempt failed
+- Intermittent, timing, environment, or multi-component failures
+- Production bugs, data corruption, or performance problems
+- Your human partner asks you to dig in
 
 ## The Four Phases
 
@@ -188,9 +186,11 @@ You MUST complete each phase before proceeding to the next.
    - Reproduction no longer fails?
    - In-scope tests and the feature's guard tests still pass? (scoped run; no full suite unless asked)
    - Issue actually resolved?
-   - Record it in the feature spec's Known issues (symptom, root cause,
-     occurrences). Second occurrence → add the guard test, prove it fails
-     on the unfixed code.
+   - If the bug is worth remembering (non-obvious root cause, user-visible,
+     or likely to come back), record it in the feature spec's Known issues
+     (symptom, root cause, occurrences). Second occurrence → add the guard
+     test, prove it fails on the unfixed code. Typos and one-off slips are
+     not recorded.
    - Use the `superpowers:verification-before-completion` skill before claiming success
 
 4. **If Fix Doesn't Work**
@@ -250,7 +250,7 @@ If you catch yourself thinking:
 
 | Excuse | Reality |
 |--------|---------|
-| "Issue is simple, don't need process" | Simple issues have root causes too. Process is fast for simple bugs. |
+| "Issue is simple, don't need process" | If the error points straight at the cause, take the fast path. If you are guessing, it is not simple. |
 | "Emergency, no time for process" | Systematic debugging is FASTER than guess-and-check thrashing. |
 | "Just try this first, then investigate" | First fix sets the pattern. Do it right from the start. |
 | "I'll skip reproducing, the fix is obvious" | Without seeing it fail you can't see it fixed. Reproduce first. |

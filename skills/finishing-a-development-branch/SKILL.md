@@ -1,6 +1,6 @@
 ---
 name: finishing-a-development-branch
-description: Use when implementation is complete, the in-scope tests pass, and you need to decide how to integrate the work
+description: Use when a large-work plan's implementation is complete on its own branch or worktree, or when your human partner asks to merge, open a PR, or wrap up a branch. Not after small or medium changes, which just get a short report.
 ---
 
 # Finishing a Development Branch
@@ -8,6 +8,11 @@ description: Use when implementation is complete, the in-scope tests pass, and y
 ## Overview
 
 **Core principle:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
+
+**Only for large work on its own branch, or on request.** After a small or
+medium change, do not show this menu: report what changed and stop. If
+your human partner already said what to do (merge, PR, leave it), do
+that without the menu.
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 
